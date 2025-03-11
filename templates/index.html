@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Klasifikasi Bunga Kertas</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='site.min.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='vendor/dropify/css/dropify.min.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='vendor/dropify/css/dropify.min.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='vendor/animate-css/vivify.min.css') }}" />
+    </head>
+    <body>
+        <div id="app">
+            <div class="text-center mt-3">
+                <h1>Klasifikasi Bunga Kertas</h1>
+                <p>Unggah gambar bunga kertas yang anda miliki untuk mengecek jenis apa bunga kertas tersebut</p>
+            </div>
+            <div class="d-flex justify-content-center mt-5">
+                <div class="upload">
+                    <div class="card">
+                        <div class="body">
+                            <input type="file" class="dropify-fr">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5" id="result">
+                <h1>Hasil Klasifikasi</h1>
+                <p>Gambar bunga kertas yang anda unggah adalah bunga kertas jenis <span></span></p>
+                <p>Kemungkinan <span></span>%</p>
+                <button class="btn btn-primary">Klasifikasi Lagi</button>
+            </div>
+        </div>
+    </body>
+    <script src="{{ url_for('static', filename='libscripts.bundle.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendorscripts.bundle.js') }}"></script>
+    <script src="{{ url_for('static', filename='mainscripts.bundle.js') }}"></script>
+    <script src="{{ url_for('static', filename='dropify.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/dropify/js/dropify.js') }}"></script>
+</html>
