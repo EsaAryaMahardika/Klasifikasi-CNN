@@ -3,6 +3,10 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
+    return render_template('welcome.html')
+
+@app.route('/klasifikasi')
+def klasifikasi():
     return render_template('index.html')
 
 if __name__ == '__main__':
