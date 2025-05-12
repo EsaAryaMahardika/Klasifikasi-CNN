@@ -2090,8 +2090,8 @@ html.fullscreen-bg #wrapper {
   -moz-border-radius: 3px;
   border-radius: 3px;
   font-weight: 400;
-  color: #a5a8ad;
-  background: #282b2f;
+  color: #ffffff;
+  background: #2a9df4;
   padding: 22px;
   border-top: 1px solid rgba(255, 255, 255, 0.09);
 }
