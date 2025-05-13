@@ -1,5 +1,12 @@
 from flask import Flask, render_template
+from keras.models import load_model # type: ignore
+import matplotlib.pyplot as plt # type: ignore
+import numpy as np
+from flask import request, jsonify
+import os
+from werkzeug.utils import secure_filename
 app = Flask(__name__)
+model = load_model('model/model_bougainville.keras')
 
 @app.route('/')
 def home():
@@ -8,6 +15,46 @@ def home():
 @app.route('/klasifikasi')
 def klasifikasi():
     return render_template('index.html')
+
+# Menguji model dengan input gambar
+def load_and_preprocess_image(image_path):
+    img = plt.imread(image_path)
+    img = np.resize(img, (150, 150, 3))  # Resize gambar ke ukuran yang sesuai
+    img = img.astype('float32') / 255.0  # Normalisasi
+    img = np.expand_dims(img, axis=0)  # Tambahkan dimensi batch
+    return img
+@app.route('/proses', methods=['POST'])
+def proses():
+    if 'image' not in request.files:
+        return jsonify({'error': 'Tidak ada file yang dikirim'}), 400
+    
+    file = request.files['image']
+    if file.filename == '':
+        return jsonify({'error': 'Nama file kosong'}), 400
+    
+    filename = secure_filename(file.filename)
+    filepath = os.path.join('uploads', filename)  # misalnya folder 'uploads'
+    file.save(filepath)
+    img = load_and_preprocess_image(filepath)
+    prediction = model.predict(img)
+    predicted_class = np.argmax(prediction, axis=1)
+    predictions = model.predict(img)[0]
+    pred_percent = [float(p) * 100 for p in predictions]
+    max_index = np.argmax(predictions)
+    confidence = round(pred_percent[max_index], 2)
+    if predicted_class == 0:
+        predict_label = 'Afterglow'
+    elif predicted_class == 1:
+        predict_label = 'Coconutice'
+    elif predicted_class == 2:
+        predict_label = 'Glabra'
+    elif predicted_class == 3:
+        predict_label = 'Goldrush'
+    elif predicted_class == 4:
+        predict_label = 'Spectabilis'
+    else:
+        predict_label = 'Tidak Teridentifikasi'
+    return jsonify({'kelas': predict_label, 'persentase': confidence})
 
 if __name__ == '__main__':
     app.run(debug=True)
